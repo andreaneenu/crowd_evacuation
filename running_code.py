@@ -3,6 +3,9 @@ import os
 import time
 from pathlib import Path
 import numpy as np
+# we have modified this code from the github repository: https://github.com/fschur/Evacuation-Bottleneck/tree/master
+# we have changed 
+
 '''
 There are different adjustments you can make to the Simulation.
 
