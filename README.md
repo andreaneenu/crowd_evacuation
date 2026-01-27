@@ -24,17 +24,6 @@ You can read the paper here:
 
 ---
 
-# Simulation Demonstrations
-
-| No Obstacle Case | Single Obstacle Case |
-| :---: | :---: |
-| <video src="assets/No_Obs.mp4" width="300" controls></video> | <video src="assets/1%20obs.mp4" width="300" controls></video> |
-
-<div align="center">
-  <h4>Two Obstacle Case</h4>
-  <video src="assets/2%20obs.mp4" width="300" controls></video>
-</div>
-
 
 
 # Code Structure
