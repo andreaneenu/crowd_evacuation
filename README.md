@@ -24,6 +24,26 @@ You can read the paper here:
 
 ---
 
+# Simulation Demonstrations
+
+<div align="center">
+  <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+    <div style="text-align: center;">
+      <h4>No Obstacle Case</h4>
+      <video src="assets/No_Obs.mp4" width="300" controls></video>
+    </div>
+    <div style="text-align: center;">
+      <h4>Single Obstacle Case</h4>
+      <video src="assets/1%20obs.mp4" width="300" controls></video>
+    </div>
+  </div>
+  <br />
+  <div style="text-align: center;">
+    <h4>Two Obstacle Case</h4>
+    <video src="assets/2%20obs.mp4" width="300" controls></video>
+  </div>
+</div>
+
 
 
 # Code Structure
