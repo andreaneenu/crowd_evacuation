@@ -24,7 +24,36 @@ You can read the paper here:
 
 ---
 
+# Simulation Demonstrations
 
+Watch our crowd evacuation simulations with different obstacle configurations:
+
+<table>
+<tr>
+<td width="50%">
+
+### No Obstacles
+[![No Obstacles](https://img.youtube.com/vi/Xe6k2Pxfrcs/0.jpg)](https://youtube.com/shorts/Xe6k2Pxfrcs?feature=share)
+
+</td>
+<td width="50%">
+
+### One Obstacle
+[![One Obstacle](https://img.youtube.com/vi/X56qHXFP3AA/0.jpg)](https://youtube.com/shorts/X56qHXFP3AA?feature=share)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+
+### Two Obstacles
+[![Two Obstacles](https://img.youtube.com/vi/buY6AbsJ4Yo/0.jpg)](https://youtube.com/shorts/buY6AbsJ4Yo?feature=share)
+
+</td>
+</tr>
+</table>
+
+---
 
 # Code Structure
 All code files are located in the this directory. Below is an overview of each file and its functionality:
