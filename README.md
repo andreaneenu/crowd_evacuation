@@ -55,6 +55,16 @@ Watch our crowd evacuation simulations with different obstacle configurations:
 
 ---
 
+# Attribution
+
+This project is adapted from the original simulation code by [fschur](https://github.com/fschur):
+
+> **Evacuation-Bottleneck** — https://github.com/fschur/Evacuation-Bottleneck/tree/master
+
+We extended and modified the base implementation to model food distribution dynamics in refugee camps, including circular obstacles, agent status tracking (alive/waiting/escaped/dead), pressure-based death, and data collection for batch experiments.
+
+---
+
 # Code Structure
 All code files are located in the this directory. Below is an overview of each file and its functionality:
 
