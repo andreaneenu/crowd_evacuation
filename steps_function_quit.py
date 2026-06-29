@@ -18,7 +18,7 @@ def display_events(movement_data, room, wait_time, radii, sim_size, dead, status
     The function draws a map for each timestep of the room with each individuals in it.
     The code is built in the library 'pygame'"""
 
-    # colors
+    # agent color by status: red=alive, orange=waiting, blue=escaped, lavender=presim, black=dead
     background_color = (170, 170, 170)  # grey
     destination_color = (0, 128, 0)               # green
     object_color = (0, 0, 0)  # black
@@ -166,7 +166,7 @@ def display_graph(agents_escaped, acceleration, mass, status, path_graph,path_do
     The third one shows the forces one random agents experienceses.
     '''
 
-    tol = 6000       # force at which the people die (in Newton)
+    tol = 6000       # legacy force threshold (unused here; death is now tracked via status array)
 
     _, num_persons, num_steps = np.shape(acceleration)
     forces_new = np.zeros((num_persons, num_steps - 1))

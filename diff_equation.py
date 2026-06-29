@@ -15,11 +15,11 @@ class Diff_Equ:
         self.m = weights                            # mass of agents (kg)
         self.v_0 = 1.5 * np.ones(self.N)            # desired velocity (m/s)
         self.radii = radii                          # radii of agents (m)
-        self.A = 2*10**3                            # constant (N)
-        self.B = 0.08                               # constant (m)
+        self.A = 2*10**3                            # SFM: repulsion interaction strength (N)
+        self.B = 0.08                               # SFM: repulsion decay length (m)
         self.tau = tau                              # time-step (s)
-        self.k = 1.2*10**5                          # parameter (kg/s^2)
-        self.kap = 2.4*10**5                        # parameter (kg/(m*s^2))
+        self.k = 1.2*10**5                          # body compression stiffness (kg/s^2)
+        self.kap = 2.4*10**5                        # sliding friction coefficient (kg/(m*s))
         self.L = L                                  # size of square room (m)
         self.r_D = room.get_destination()           # position of door (m,m)
         self.numwalls = self.room.get_num_walls()   # number of walls
@@ -28,7 +28,7 @@ class Diff_Equ:
         # True if there are walls in the middle of the room
         self.wallshere = self.room.wallshere
 
-    # Checks if an agent touches anotherone or a wall
+    # Contact force activates only when agents/walls physically overlap (gap < 0)
     def g(self, x):
         """returns a float, the value of the argument if and only if the input is negative
              parameters:   ``x``: float
@@ -260,11 +260,13 @@ class Diff_Equ:
             else:
                 return (-r + self.r_D[1]) / np.linalg.norm(-r + self.r_D[1])
         if (status == 2):
+            # escaped agents move perpendicular to the crowd to clear the exit area
             if (r[1] > (self.room.room_size)/2):
                 return [0, 1.0]/np.linalg.norm([0, 1.0])
             else:
                 return [0, -1.0]/np.linalg.norm([0, -1.0])
         if (status == 0 or status == 3 or status == 4):
+            # dead / waiting / pre-sim agents have zero driving force
             return np.array([0.0, 0.0])
         return (-r + self.r_D) / np.sqrt(np.square(np.linalg.norm(-r + self.r_D))+0.1)
 
@@ -392,6 +394,7 @@ class Diff_Equ:
         e_temp = self.e_t(r, status)
         # acc = (self.v_0 * e_temp - v) / self.tau + \
         #     self.f_ag(r, v) / self.m + self.f_wa(r, v) / self.m
+        # SFM: driving term (0.1 damping) + agent repulsion + wall repulsion + obstacle repulsion
         acc = (self.v_0 * e_temp - v)*0.1 / self.tau + self.f_ag(r, v, status) / self.m + \
             self.f_wa(r, v) / self.m + self.f_circwalls(r, v,
                                                         sim_class.circular_Obstacles) / self.m

@@ -85,12 +85,13 @@ def leap_frog(y0, v0, f, e_0, N_steps, dt, room, sim_class):
     y = np.zeros((y0.shape[0], y0.shape[1], N_steps))
     v = np.zeros((y0.shape[0], y0.shape[1], N_steps))
     a = np.zeros((y0.shape[0], y0.shape[1], N_steps))
-    # 1=live 2=got_food 0=dead 3=waiting 4=presim
+    # agent status codes: 4=presim, 1=alive, 3=waiting at exit, 2=escaped, 0=dead
     status = np.ones((y0.shape[1], N_steps))
     counter = np.full(y0.shape[1], (int)(sim_class.delay/sim_class.tau))
     y[:, :, 0] = y0
+    # half-step velocity initialization required by leap-frog (velocity is staggered by dt/2)
     v[:, :, 0] += 0.5*dt*f(y[:, :, 0], v[:, :, 0], status[:, 0],sim_class=sim_class)[0]
-    status[:, 0] = 4
+    status[:, 0] = 4  # presim: agents settle into position before driving toward exit
     # v[:,:,0] = v0 + 0.5*dt*f(y0)
     lst = 0
     for k in range(N_steps-1):
@@ -112,7 +113,7 @@ def leap_frog(y0, v0, f, e_0, N_steps, dt, room, sim_class):
 
             status[i][k+1] = status[i][k]
             #     continue
-            if pressure[i] > 10800:
+            if pressure[i] > 10800:  # pressure threshold: cumulative force/radius exceeding this kills the agent
                 if status[i][k+1] > 0 and status[i][k+1]<4:
                     status[i][k+1] = 0
                     deadstillnow += 1

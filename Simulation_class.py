@@ -21,6 +21,7 @@ the run function. If the integration is done the results
 are saved in self.y for later use for example to display
 them with with the function "Show"'''
 
+# Lightweight container for a circular obstacle (center point + radius)
 class circularwall:
     def __init__(self,center,radius):
         self.center=center
@@ -33,7 +34,7 @@ class Simulation:
         std_deviation = 0.07
         self.num_steps=int(total_time/tau)
         self.delay=delay
-        # is late used to make the agents differ in weight and size
+        # per-agent scale factor (~1.0) so mass and radius vary slightly between agents
         variation = np.random.normal(
             loc=1, scale=std_deviation, size=(1, num_individuals))
 
@@ -67,6 +68,8 @@ class Simulation:
             self.N, self.L, self.tau, self.room, self.radii, self.m)
         self.obs_rad=obs_rad
         self.obs_dis=obs_dis
+        # Obstacles are placed in front of the exit (x = collection_radius + obs_dis + obs_rad),
+        # symmetric around the vertical midline, forming a bottleneck gap of obs_gap.
         circwalls=[]
         if num_obs==1:
             circwalls=[
@@ -90,7 +93,7 @@ class Simulation:
 
     def dont_touch(self, i, pos):  # yields false if people don't touch each other and true if they do
         for j in range(i - 1):
-            if np.linalg.norm(pos - self.y[:, j, 0]) < self.radii[i]+self.radii[j]+0.32:
+            if np.linalg.norm(pos - self.y[:, j, 0]) < self.radii[i]+self.radii[j]+0.32:  # +0.32: minimum clearance gap at spawn
                 return True
         for obs in self.circular_Obstacles:
             if np.linalg.norm(pos - obs.center) < self.radii[i]+obs.radius+0.32:
